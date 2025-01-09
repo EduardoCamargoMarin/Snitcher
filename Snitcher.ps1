@@ -11,8 +11,8 @@ $devices = @(
 )
 
 # Telegram Messenger
-$botToken = "7841399165:AAEpYmUs2A6e2kvYNvTS08x8WQAF_Dcw_aY"
-$chatID = "7824317682"
+$botToken = "7841399165:AAEpYmUs2A6e2kvYNvTS08x8WQAF_Dcw_aY" # Invalid public BotToken - This is an example
+$chatID = "7824317682" # Invalid public ChatID - This is an Example
 
 # Send message with UTF-08 decode
 function Send-TelegramMessage {
@@ -56,12 +56,12 @@ while ($true) {
         $testResult = Test-Connection -ComputerName $device -Count 1 -Quiet
         
         if ($testResult) {
-            Write-Host " [ $device ] est· online" -ForegroundColor Green
+            Write-Host " [ $device ] est√° online" -ForegroundColor Green
         } else {
-            Write-Host " [ $device ] est· offline" -ForegroundColor Red
+            Write-Host " [ $device ] est√° offline" -ForegroundColor Red
 
-            # Envia mensagem para o Telegram quando o dispositivo est· offline
-            $message = "Alerta! A Central de XPTO est· offline."
+            # Envia mensagem para o Telegram quando o dispositivo est√° offline
+            $message = "Alerta! A Central de XPTO est√° offline."
             Send-TelegramMessage -botToken $botToken -chatId $chatID -message $message
         }
     }
