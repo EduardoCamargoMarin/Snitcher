@@ -29,8 +29,8 @@ $lastChecked = @{}
 $currentStatuses = @{}
 
 # Telegram Messenger
-$botToken = "7841399165:AAEpYmUs2A6e2kvYNvTS08x8WQAF_Dcw_aY"
-$chatID = "7824317682"
+$botToken = "<INSIRA O TOKEN>"
+$chatID = "<INSIRA O ID"
 
 # Send message with UTF-8 decode
 function Send-TelegramMessage {
