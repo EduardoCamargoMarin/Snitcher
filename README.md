@@ -13,8 +13,11 @@ Snitcher is a script that keeps the local network in check, and if any devices o
  - /setprivacy - toggle privacy mode in groups
    
  - Send a message to your bot that you just created
- - Use the token that BotFather gave you and insert in the URL to adquire the ChatID https://api.telegram.org/bot[ BOT TOKEN ]/sendMessage
+ - Use the token that BotFather gave you and insert in the URL to adquire the ChatID https://api.telegram.org/bot[ BOT TOKEN ]/sendMessage and https://api.telegram.org/bot[BOT TOKEN]/getUpdates
+ - Copy the Chat ID token
  - Place the Bot Token and Chat ID in the corresponding Variables at the beggining of the code.
+ - $botToken = ""
+ - $chatID = ""
  - Change the device that you want to monitor
  - Check for results
 
