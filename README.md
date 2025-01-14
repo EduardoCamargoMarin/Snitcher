@@ -1,6 +1,9 @@
 # Snitcher
 Snitcher is a script that keeps the local network in check, and if any devices or network access goes offline, it will send a message to your telegram.
 
+# Important
+- Download just the Launcher, so it can create a shortcut with the icon configured.
+
 # How to use
  - Create a Telegram Bot by talking to @BotFather
  - Save the token for later use.
