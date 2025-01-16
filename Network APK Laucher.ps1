@@ -11,10 +11,10 @@ if (-not (Test-Path -Path $installDir)) {
 }
 
 
-Invoke-WebRequest -Uri $scriptUrl -OutFile "$installDir\snitcher.ps1"
+Invoke-WebRequest -Uri $scriptUrl -OutFile "$installDir\Snitcher.ps1"
 
 
-Invoke-WebRequest -Uri $iconUrl -OutFile "$installDir\snitcher.ico"
+Invoke-WebRequest -Uri $iconUrl -OutFile "$installDir\Snitcher.ico"
 
 $desktop = [System.Environment]::GetFolderPath('Desktop')
 $shortcutPath = Join-Path -Path $desktop -ChildPath "Snitcher.lnk"
