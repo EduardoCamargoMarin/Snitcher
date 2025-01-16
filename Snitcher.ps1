@@ -18,10 +18,10 @@ function Log-Event {
 }
 
 $devices = @(
-    @{ IP = "8.8.8.9"; Interval = 5 }, # invalid IP for offline testing
-    @{ IP = "1.1.1.1"; Interval = 10 },
-    @{ IP = "google.com"; Interval = 15 },
-    @{ IP = "156.59.238.9"; Interval = 20 }
+    @{ NAME = "Central A-SP"; IP = "187.87.247.83"; Interval = 5 }, # Random Public IP for Testing
+    @{ NAME = "Central B-SP"; IP = "1.1.1.1"; Interval = 10 }, # CloudFlare
+    @{ NAME = "Central C-SP"; IP = "8.8.8.8"; Interval = 15 }, # Google
+    @{ NAME = "Central D-SP"; IP = "177.170.209.44"; Interval = 20 } # Random Public IP for Testing
 )
 
 # Data storage of the last verification
@@ -30,7 +30,7 @@ $currentStatuses = @{}
 
 # Telegram Messenger
 $botToken = "<INSIRA O TOKEN>"
-$chatID = "<INSIRA O ID"
+$chatID = "<CHAT ID>"
 
 # Send message with UTF-8 decode
 function Send-TelegramMessage {
@@ -69,6 +69,7 @@ while ($true) {
     foreach ($device in $devices) {
         $ip = $device.IP
         $interval = $device.Interval
+        $locationName = $device.NAME
 
         if (-not $lastChecked.ContainsKey($ip)) {
             $lastChecked[$ip] = (Get-Date).AddSeconds(-$interval)
@@ -90,17 +91,17 @@ while ($true) {
 
             # Log status
             if ($testResult) {
-                Write-Host " [ $ip ] está online" -ForegroundColor Green
+                Write-Host " [ $locationName ] está online" -ForegroundColor Green
                 Log-Event -message "Dispositivo $ip está online."
             } else {
-                Write-Host " [ $ip ] está offline" -ForegroundColor Red
+                Write-Host " [ $locationName ] está offline" -ForegroundColor Red
                 Log-Event -message "Dispositivo $ip está offline."
             }
 
             # Send alert if status changed
             if ($previousStatus -ne $testResult) {
-                $statusText = if ($testResult) { "online" } else { "offline" }
-                $message = "Alerta! O dispositivo $ip mudou de status para $statusText."
+                $statusText = if ($testResult) { "ONLINE" } else { "OFFLINE" }
+                $message = " $locationName mudou de status para $statusText."
                 Send-TelegramMessage -botToken $botToken -chatId $chatID -message $message
             }
 
