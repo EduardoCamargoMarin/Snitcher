@@ -17,20 +17,30 @@ function Log-Event {
     Add-Content -Path $logFile -Value "$logEntry`r`n"
 }
 
-$devices = @(
-    @{ NAME = "Central A-SP"; IP = "187.87.247.83"; Interval = 5 }, # Random Public IP for Testing
-    @{ NAME = "Central B-SP"; IP = "1.1.1.1"; Interval = 10 }, # CloudFlare
-    @{ NAME = "Central C-SP"; IP = "8.8.8.8"; Interval = 15 }, # Google
-    @{ NAME = "Central D-SP"; IP = "177.170.209.44"; Interval = 20 } # Random Public IP for Testing
-)
+# Path to Excel file with devices
+$excelFilePath = "C:\Network APK\Snitcher\Devices.xlsx"
+if (!(Test-Path $excelFilePath)) {
+    Write-Host "Arquivo de dispositivos não encontrado: $excelFilePath" -ForegroundColor Red
+    Pause
+    exit
+}
+
+try {
+    Import-Module ImportExcel -ErrorAction Stop
+    $devices = Import-Excel -Path $excelFilePath
+} catch {
+    Write-Host "Erro ao importar o módulo ImportExcel ou ler o arquivo: $_" -ForegroundColor Red
+    Pause
+    exit
+}
 
 # Data storage of the last verification
 $lastChecked = @{}
 $currentStatuses = @{}
 
 # Telegram Messenger
-$botToken = "<INSIRA O TOKEN>"
-$chatID = "<CHAT ID>"
+$botToken = "7841399165:AAEpYmUs2A6e2kvYNvTS08x8WQAF_Dcw_aY"
+$chatID = "7824317682"
 
 # Send message with UTF-8 decode
 function Send-TelegramMessage {
@@ -67,6 +77,15 @@ while ($true) {
     Write-Host "================================================"
 
     foreach ($device in $devices) {
+
+         # Check if NAME, IP and INTERVAL has data
+
+        if (-not $device.NAME -or -not $device.IP -or -not $device.INTERVAL) {
+        Write-Host "Dispositivo inválido detectado. Nome: $($device.NAME), IP: $($device.IP), Intervalo: $($device.INTERVAL)" -ForegroundColor Yellow
+        continue
+    }
+
+
         $ip = $device.IP
         $interval = $device.Interval
         $locationName = $device.NAME
