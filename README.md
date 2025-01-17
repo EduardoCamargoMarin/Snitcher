@@ -2,7 +2,7 @@
 Snitcher is a script that keeps the local network in check, and if any devices or network access goes offline, it will send a message to your telegram.
 
 # Important
-- Download just the Launcher, so it can create a shortcut with the icon configured.
+- Download just the Launcher, so it can create a shortcut with the icon configured and a path to use the .xlsx to import data from the devices you want to monitor.
 
 # How to use
  - Create a Telegram Bot by talking to @BotFather
@@ -18,7 +18,7 @@ Snitcher is a script that keeps the local network in check, and if any devices o
  - Place the Bot Token and Chat ID in the corresponding Variables at the beggining of the code.
  - $botToken = ""
  - $chatID = ""
- - Change the device that you want to monitor
+ - Use the .xlsx to add many devices you want, the script will import those data and start to monitoring those devices. Don't forget to save it before executing the script.
  - Check for results
 
    # Note
