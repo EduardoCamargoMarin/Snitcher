@@ -1,5 +1,6 @@
 ﻿
 $scriptUrl = "https://raw.githubusercontent.com/EduardoCamargoMarin/Snitcher/main/Snitcher.ps1"
+$importData = "https://raw.githubusercontent.com/EduardoCamargoMarin/Snitcher/main/Devices.xlsx"
 $iconUrl = "https://raw.githubusercontent.com/EduardoCamargoMarin/Snitcher/main/SnitcherIcon" 
 
 
@@ -13,8 +14,9 @@ if (-not (Test-Path -Path $installDir)) {
 
 Invoke-WebRequest -Uri $scriptUrl -OutFile "$installDir\Snitcher.ps1"
 
+Invoke-WebRequest -Uri $iconUrl -OutFile "$installDir\snitcher.ico"
 
-Invoke-WebRequest -Uri $iconUrl -OutFile "$installDir\Snitcher.ico"
+Invoke-WebRequest -Uri $importData -OutFile "$installDir\Devices.xlsx"
 
 $desktop = [System.Environment]::GetFolderPath('Desktop')
 $shortcutPath = Join-Path -Path $desktop -ChildPath "Snitcher.lnk"
@@ -26,6 +28,15 @@ $shortcut.TargetPath = "powershell.exe"
 $shortcut.Arguments = "-ExecutionPolicy Bypass -File `"$installDir\snitcher.ps1`""
 $shortcut.IconLocation = "$installDir\snitcher.ico"
 $shortcut.Save()
+
+
+
+if (-not (Get-Module -Name ImportExcel -ListAvailable)) {
+    Write-Host "O módulo ImportExcel não foi encontrado. Instalando..."
+    Install-Module -Name ImportExcel -Force -Scope CurrentUser
+} else {
+    Write-Host "O módulo ImportExcel já está instalado."
+}
 
 Write-Host "Instalação concluída. O atalho foi criado na área de trabalho."
 Pause
